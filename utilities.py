@@ -1,6 +1,6 @@
 # About: Utilities
 # Author: walid.daboubi@gmail.com
-# Version: 2.0 - 2022/08/14
+# Version: 3.0 - 2025/08/06 - Blackhat Las Vegas 
 
 import configparser
 import re
@@ -10,7 +10,7 @@ import time
 import psutil
 import logging
 import requests
-import socket
+
 
 def get_process_col_locations(header_line, list_col_names):
     col_locations = {}
@@ -344,6 +344,7 @@ def gen_report(findings,log_file,log_type,llm_model):
                         cves += "<a href='https://nvd.nist.gov/vuln/detail/{}'>{}</a><br>".format(cve,cve)
         else:
             cves='<i>No CVE found</i>'
+        
 
         if severity == 'medium':
             background='orange'
@@ -377,7 +378,7 @@ def gen_report(findings,log_file,log_type,llm_model):
         result_file.write(report_str)
     return report_file_path
 
-def submit_to_app(findings,log_file,log_type,llm_model):
+def submit_to_app(hostname,findings,log_file,log_type,llm_model):
     for finding in findings:
         severity=finding['severity']
         #cve = finding['cve'] if 'cve' in finding else 'Not found'
@@ -391,6 +392,9 @@ def submit_to_app(findings,log_file,log_type,llm_model):
                     if 'CVE-' in cve:
                         cves += "<a href='https://nvd.nist.gov/vuln/detail/{}'>{}</a><br>".format(cve,cve)
         else:
+            cves='<i>No CVE found</i>'
+        
+        if cves=='':
             cves='<i>No CVE found</i>'
 
         if severity == 'medium':
@@ -415,15 +419,11 @@ def submit_to_app(findings,log_file,log_type,llm_model):
                 "log_line":finding['log_line_number'],
                 "log_line_content":finding['log_line'],
                 "attack_vector": "Web",
-                "host":socket.gethostname()
+                "host":hostname
             }
         }
 
         response = requests.post(url, headers=headers, json=data)
-
-        print(response.status_code)
-        print(response.json())
-
 
 def get_process_details(pid):
     process_details_attributes = ast.literal_eval(config['PROCESS_DETAILS']['attributes'])

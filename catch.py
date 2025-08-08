@@ -8,6 +8,7 @@ import io
 import os
 import kneed
 import argparse
+import socket
 import pyfiglet
 import termcolor
 import urllib3
@@ -247,8 +248,41 @@ def get_minority_clusters(elements_by_cluster,threshold):
     return minority_clusters
 
 
+
+
+import os
+from urllib.parse import urlparse, parse_qs
+
+def extract_filenames_from_url(http_url: str, param_name='file') -> list:
+    """
+    Extracts file names from both the path and query parameters of an HTTP URL.
+
+    Args:
+        http_url (str): The full HTTP URL.
+        param_name (str): The query parameter name to extract (default is 'file').
+
+    Returns:
+        list: A list of file names found in the URL.
+    """
+    parsed = urlparse(http_url)
+
+    filenames = []
+
+    # Extract filename from the path, if the last segment looks like a file
+    path_basename = os.path.basename(parsed.path)
+    if '.' in path_basename:  # crude check for a file extension
+        filenames.append(path_basename)
+
+    # Extract file(s) from query string
+    query_params = parse_qs(parsed.query)
+    filenames += query_params.get(param_name, [])
+
+    return filenames
+
+
+
 # This function will be removed as it has been replaced with a new find_cves which is LLM based 
-def find_cves_old(findings):
+def find_cves(findings):
     bad_chars = ['/','?','=','&','%','#']
     enriched_findings = []
     checked_candidate_strings = {}
@@ -257,39 +291,37 @@ def find_cves_old(findings):
         if finding['severity'] == 'high':
             finding['cve'] = ''
             final_requested_url = finding['log_line'].split('"')[1].split(' ')[1]
-            # Replace 'bad' chars by spaces
-            for bad_char in bad_chars:
-                final_requested_url=final_requested_url.replace(bad_char,' ')
-            for candidate_string in final_requested_url.split(' '):
-                if len(candidate_string) >= 10:
-                    try:
-                        if candidate_string not in checked_candidate_strings:
-                            checked_candidate_strings[candidate_string] = ''
-                            response = requests.get('https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch={}'.format(candidate_string),verify=False)
-                            max_cve_by_candidate_string = 10
-                            if response.status_code == 200 and 'vulnerabilities' in response.json():
-                                for vuln in response.json()['vulnerabilities']:
-                                    # Get only the most recent CVE
-                                    cve_year=int(vuln['cve']['id'].split('-')[1])
-                                    if cve_year>=int(config['CVE']['year_threshold']):
-                                        logging.info('{} found'.format(vuln['cve']['id']))
-                                        max_cve_by_candidate_string -= 1
-                                        if max_cve_by_candidate_string == 0:
-                                            break
-                                        finding['cve'] += vuln['cve']['id']+' '
-                                        checked_candidate_strings[candidate_string]+=vuln['cve']['id']+' '
-                                # Sleep to ne be blocked by services.nvd.nist.gov
-                                time.sleep(10)
-                        else:
-                            finding['cve'] += checked_candidate_strings[candidate_string] + ' '
-                    except:
-                        logging.info('Something wrong getting CVE(s)')
+
+            # Extract file names from the url and retrieve related vulnerabilities 
+            for candidate_string in extract_filenames_from_url(final_requested_url):
+                try:
+                    if candidate_string not in checked_candidate_strings:
+                        checked_candidate_strings[candidate_string] = ''
+                        response = requests.get('{}{}'.format(config['CVE']['source'],candidate_string),verify=False)
+                        max_cve_by_candidate_string = 10
+                        if response.status_code == 200 and 'vulnerabilities' in response.json():
+                            for vuln in response.json()['vulnerabilities']:
+                                # Get only the most recent CVE
+                                cve_year=int(vuln['cve']['id'].split('-')[1])
+                                if cve_year>=int(config['CVE']['year_threshold']):
+                                    logging.info('{} found'.format(vuln['cve']['id']))
+                                    max_cve_by_candidate_string -= 1
+                                    if max_cve_by_candidate_string == 0:
+                                        break
+                                    finding['cve'] += vuln['cve']['id']+' '
+                                    checked_candidate_strings[candidate_string]+=vuln['cve']['id']+' '
+                            # Sleep to ne be blocked by services.nvd.nist.gov
+                            time.sleep(10)
+                    else:
+                        finding['cve'] += checked_candidate_strings[candidate_string] + ' '
+                except:
+                    logging.info('Something wrong getting CVE(s)')
         enriched_findings.append(finding)
     return enriched_findings
 
 
 # Find CVE(s) relared to the attack trace based on LLM
-def find_cves(findings):
+def find_cves_(findings):
     bad_chars = ['/','?','=','&','%','#']
     enriched_findings = []
     checked_candidate_strings = {}
@@ -556,6 +588,7 @@ def main():
 
     # Generate a HTML report if requested
     if args['report']:
+        logging.info('> Report generation')
         #find_cves(all_findings)
         report_file=gen_report(
             all_findings,args['log_file'],
@@ -565,7 +598,10 @@ def main():
         webbrowser.open('file://{}/{}'.format(os.getcwd(),report_file))
 
     if args['submit_to_app']:
+        hostname=socket.gethostname()
+        logging.info('> Submission to Webhawk app')
         submit_to_app(
+            hostname,
             all_findings,args['log_file'],
             args['log_type'],
             config['LLM']['model']

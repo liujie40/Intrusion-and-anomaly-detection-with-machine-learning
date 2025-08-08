@@ -18,6 +18,7 @@ nginx_error:
 attributes:['status', 'num_ctx_switches', 'memory_full_info', 'connections', 'cmdline', 'create_time', 'num_fds', 'cpu_percent', 'terminal', 'ppid', 'cwd', 'nice', 'username', 'cpu_times', 'memory_info', 'threads', 'open_files', 'name', 'num_threads', 'exe', 'uids', 'gids', 'memory_percent', 'environ']
 
 [CVE]
+source:https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=
 year_threshold:YYYY
 
 [LLM]

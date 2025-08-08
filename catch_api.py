@@ -158,14 +158,23 @@ def main(placeholder,logs_content):
     # plot findings and save the plot if save_plot_at is defined
     #plot_findings(dataframe,labels,save_plot_at)
     
+
     cves_finding=True
+    ai_advice=True
+
     report=True
+    sync_app=True
     print(all_findings)
 
     
     if cves_finding == True:
         logging.info('> Finding CVEs started')
         all_findings = find_cves(all_findings)
+    
+    if ai_advice == True:
+        logging.info('> Getting AI advice started')
+        all_findings = get_llm_insights(all_findings)
+
     # Generate a HTML report if requested
     if report:
         #find_cves(all_findings)
@@ -175,4 +184,7 @@ def main(placeholder,logs_content):
             config['LLM']['model']
             )
     
+    if sync_app==True:
+        hostname=placeholder
+        submit_to_app(hostname,all_findings,log_file,log_type,config['LLM']['model'])    
     return all_findings
