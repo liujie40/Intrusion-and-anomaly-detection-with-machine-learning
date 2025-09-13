@@ -330,7 +330,7 @@ def find_cves_(findings):
         if finding['severity'] == 'high':
             finding['cve'] = ''
             final_requested_url = finding['log_line'].split('"')[1].split(' ')[1]
-            url=config['LLM']['url']
+            url='{}/api/generate'.format(config['LLM']['url'])
             data = {
                     "model": 'llama3.2:latest',
                     "prompt": (
@@ -346,6 +346,18 @@ def find_cves_(findings):
     return enriched_findings
 
 
+def pull_model(model_name,url):
+    response = requests.post('{}/api/pull'.format(url), json={"name": model_name}, stream=True)
+    if response.status_code == 200:
+        print(f"Pulling model: {model_name}")
+        for line in response.iter_lines():
+            if line:
+                print(line.decode('utf-8'))
+        print("Model pulled successfully.")
+    else:
+        print(f"Failed to pull model: {response.status_code}")
+        print(response.text)
+
 
 def get_llm_insights(findings):
     enriched_findings = []
@@ -356,7 +368,7 @@ def get_llm_insights(findings):
         current+=1
         finding['ai_advice'] = ''
         final_requested_url = finding['log_line'].split('"')[1].split(' ')[1]
-        url=config['LLM']['url']
+        url='{}/api/generate'.format(config['LLM']['url'])
         data = {
                 "model": config['LLM']['model'],
                 "prompt": (

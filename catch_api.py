@@ -166,6 +166,10 @@ def main(placeholder,logs_content):
     sync_app=True
     print(all_findings)
 
+    if cves_finding==True or ai_advice==True:
+        # Pull model if not available 
+        pull_model(config['LLM']['model'],config['LLM']['url'])
+
     
     if cves_finding == True:
         logging.info('> Finding CVEs started')

@@ -22,7 +22,8 @@ source:https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=
 year_threshold:YYYY
 
 [LLM]
-url:http://localhost:11434/api/generate
+url:http://ollama:11434 #if using docker
+url:http://localhost:11434 #if not using docker
 model:llama3.2
 prompt:Analyze this web log line for malicious activity. Provide a brief one pragraph (less than 60 words) as a response. Indidate if there is a known related attack or vulnerability. Do not start with 'This log line'
 
