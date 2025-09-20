@@ -5,7 +5,7 @@ Unsupervised Machine Learning web attacks detection.
 
 
 <p align="center">  
-  <img width="100%" src="https://github.com/slrbl/unsupervised-learning-attack-detection-webhawk-catch/blob/master/images/hawk.jpg">
+  <img width="100%" src="https://github.com/slrbl/unsupervised-learning-attack-detection-webhawk-catch/blob/master/IMAGES/hawk.jpg">
   Image source:https://unsplash.com/photos/i4Y9hr5dxKc (Mathew Schwartz)
 </p>
 
@@ -113,19 +113,19 @@ python catch.py -l ./SAMPLE_DATA/RAW_APACHE_LOGS/access.log.2022-12-22 --log_typ
 The output of this command is:
 
 <p align="center">  
-  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/images/execution_screeshot.png">
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/execution_screeshot.png">
 </p>
 
 <p align="center">  
-  <img width="80%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/images/figure_1.png">
+  <img width="80%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/figure_1.png">
 </p>
 
 <p align="center">  
-  <img width="80%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/images/figure_2.png">
+  <img width="80%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/figure_2.png">
 </p>
 
 <p align="center">  
-  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/images/report_screenshot.png">
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/report_screenshot.png">
 </p>
 
 
