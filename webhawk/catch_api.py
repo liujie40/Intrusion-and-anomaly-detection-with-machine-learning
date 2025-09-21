@@ -153,7 +153,7 @@ def main(hostname,logs_content):
         logging.info('No minority clusters found.')
     
     #where to save the plot
-    save_plot_at ='./REPORTS/scan_plot_{}'.format(log_file.split('/')[-1].replace('.','_'))
+    #save_plot_at ='./REPORTS/scan_plot_{}'.format(log_file.split('/')[-1].replace('.','_'))
     
     # plot findings and save the plot if save_plot_at is defined
     #plot_findings(dataframe,labels,save_plot_at)
