@@ -43,12 +43,16 @@ docker compose up
 ```
 
 Once the above command are launched, thre services will be running:
-### Webhawk
+#### Webhawk
 This is the service used for detection, it takes as input a log file and it return detections.
-### Ollama 
+#### Ollama 
 This service is used to make prompt for LLMs and getting response.
-### Webhawk web application 
+#### Webhawk web application 
 This service is used to run the web application where the detections results will be treated by cyber analysts.
+
+### Launching Docker services for the first time 
+If you are running launching the Docker services after the first build then you need to expect some delay for the first agent request, which you can test using the script ./webhawk/api_test.py. In fact this delay is related to downloading the selected Ollama selected model. 
+
 
 ## Development setup
 
