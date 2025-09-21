@@ -70,7 +70,7 @@ pip install -r requirements.txt
 
 ### Create a settings.conf file
 
-Copy settings_template.conf file to settings.conf and fill it with the required parameters as the following.
+Copy settings.conf.template file to settings.conf and fill it with the required parameters as the following.
 
 ```shell
 [FEATURES]
@@ -92,10 +92,20 @@ nginx_error:
 [PROCESS_DETAILS]
 attributes:['status', 'num_ctx_switches', 'memory_full_info', 'connections', 'cmdline', 'create_time', 'num_fds', 'cpu_percent', 'terminal', 'ppid', 'cwd', 'nice', 'username', 'cpu_times', 'memory_info', 'threads', 'open_files', 'name', 'num_threads', 'exe', 'uids', 'gids', 'memory_percent', 'environ']
 
+[CVE]
+source:https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=
+year_threshold:YYYY
+
 [LLM]
-url:http://localhost:11434/api/generate
-model:llama3.2
-prompt:a prompt of yout choice to check the log line
+url:http://ollama:11434 #if using docker compose
+url:http://localhost:11434 #if not using docker compose
+model:intigration/analyzer:latest #or select a model of your choice
+prompt:Analyze this web log line for malicious activity. Provide a brief one pragraph (less than 60 words) as a response. Indidate if there is a known related attack or vulnerability. Do not start with 'This log line'
+
+[WEBAPP]
+webhawk_app
+url:http://webhawk_app:3000/api/v1/incidents #if using docker compose
+url:http://localhost:3000/api/v1/incidents #if not using docker compose
 ```
 
 ## Unsupervised detection Usage
