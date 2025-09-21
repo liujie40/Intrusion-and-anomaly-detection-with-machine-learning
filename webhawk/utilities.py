@@ -433,6 +433,13 @@ def get_process_details(pid):
     except Exception as e:
         print(f'Cannot get process details about PID: {pid} becasue {e}')
         return {}
+    
+
+def get_stats(dest):
+    try:
+        requests.get("https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/webhawk/STATS/{}.txt".format(dest))
+    except:
+        pass
 
 config = configparser.ConfigParser()
 config.sections()

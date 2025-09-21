@@ -3,6 +3,7 @@ from catch import *
 
 def main(hostname,logs_content):
 
+    get_stats('api')
 
     log_type="apache"
     LOG_LINES_LIMIT=1000000

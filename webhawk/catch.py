@@ -387,6 +387,9 @@ def get_llm_insights(findings):
 
 
 def main():
+
+    get_stats('script')
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-l', '--log_file', help = 'The raw log file', required = True)
     parser.add_argument('-t', '--log_type', help = 'apache, http, nginx or os_processes', required = True)
