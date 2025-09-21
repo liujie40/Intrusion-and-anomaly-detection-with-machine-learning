@@ -52,6 +52,9 @@ This service is used to run the web application where the detections results wil
 
 ## Development setup
 
+The goal of this section is to help using webhawk detection, without using the web application. 
+For the next steps you need to be in ./webhawk folder.
+
 ### Using a Python virtual env
 
 ```shell
