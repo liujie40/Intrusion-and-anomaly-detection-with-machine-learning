@@ -23,6 +23,13 @@ The current version of Webhawk/Catch generates an easy-to-read HTML report which
 
 Webhawk/Catch is an open-source tool. Catch is the unsupervised version of Webhawk which is a supervised machine learning based cyber-attack detection tool. In contrary to the supervised Webhawk, Catch can be used without manually pertaining a model, the thing that makes it a lightweight and flexible solution to easily identify potential attack traces.  Catch is available as an independent repository in Github, it is also included as part of Webhawk which is starred 125 times and forked 68 times.
 
+
+## High level design
+
+<p align="center">  
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_design.png">
+</p>
+
 ## Production services setup
 
 ### Configuring webhawk/settings.conf file
