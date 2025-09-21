@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   webhawk:
     build:
@@ -8,13 +7,11 @@ services:
       - "8000:8000"
     volumes:
       - ./webhawk:/app
-
   ollama:
     image: ollama/ollama
     command: serve
     ports:
       - "11434:11434"
-
   webhawk_app:
     build:
       context: ./webhawk_app

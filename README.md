@@ -23,7 +23,27 @@ The current version of Webhawk/Catch generates an easy-to-read HTML report which
 
 Webhawk/Catch is an open-source tool. Catch is the unsupervised version of Webhawk which is a supervised machine learning based cyber-attack detection tool. In contrary to the supervised Webhawk, Catch can be used without manually pertaining a model, the thing that makes it a lightweight and flexible solution to easily identify potential attack traces.  Catch is available as an independent repository in Github, it is also included as part of Webhawk which is starred 125 times and forked 68 times.
 
-## Setup
+## Production services setup
+
+### Configuring webhawk/settings.conf file
+Details about setting up this configuration file can be found in Development setup/Create a settings.conf file section below.
+
+### Building and launching Docker services 
+
+```shell
+docker compose build
+docker compose up
+```
+
+Once the above command are launched, thre services will be running:
+### Webhawk
+This is the service used for detection, it takes as input a log file and it return detections.
+### Ollama 
+This service is used to make prompt for LLMs and getting response.
+### Webhawk web application 
+This service is used to run the web application where the detections results will be treated by cyber analysts.
+
+## Development setup
 
 ### Using a Python virtual env
 

@@ -4,7 +4,6 @@ from catch import *
 def main(hostname,logs_content):
 
 
-    log_file="./SAMPLE_DATA/RAW_APACHE_LOGS/access.log.2025-05-23"
     log_type="apache"
     LOG_LINES_LIMIT=1000000
     FEATURES = [
