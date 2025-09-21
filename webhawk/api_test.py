@@ -3,12 +3,14 @@ import requests
 import socket
 
 parser = argparse.ArgumentParser(description="Testing webhawk API with an Apache log file")
+
 parser.add_argument(
-    "-l"
+    "-l", 
     "--log_file",
-    type=str,
-    help="Path to the Apache log file to scan (e.g., ./SAMPLE_DATA/RAW_APACHE_LOGS/access.log.2022-12-22)"
+    help = "Path to the Apache log file to scan (e.g., ./SAMPLE_DATA/RAW_APACHE_LOGS/access.log.2022-12-22)", 
+    required = True
 )
+
 args = parser.parse_args()
 
 with open(args.log_file,'r') as f:
