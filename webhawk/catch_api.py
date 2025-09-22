@@ -1,7 +1,7 @@
 
 from catch import *
 
-def main(hostname,logs_content):
+def main(hostname,log_file,logs_content):
 
     get_stats('api')
 
@@ -36,7 +36,7 @@ def main(hostname,logs_content):
     log_file_content=logs_content
 
     data = get_data(
-        None, # No log_file as the logs as provided as a string
+        log_file, # No log_file as the logs as provided as a string
         log_file_content,
         log_type,
         LOG_LINES_LIMIT,
@@ -44,7 +44,6 @@ def main(hostname,logs_content):
         encoding_type
         )
     
-
     # convert to a dataframe
     if log_type != 'os_processes':
         dataframe = data.to_numpy()[:,list(range(0,len(FEATURES)-1))]
@@ -93,11 +92,6 @@ def main(hostname,logs_content):
     dbscan_model = dbscan.fit(dataframe)
 
 
-
-
-
-
-
     # Check the number of labels (if 1 then try without EPS value)
     if len(set(dbscan_model.labels_)) == 1:
         logging.info('{}Only one cluster was found using the value {} as epsilon'.format(4*' ',selected_eps))
@@ -135,8 +129,6 @@ def main(hostname,logs_content):
         print_findings(medium_findings, log_type)
 
     all_findings = high_findings + medium_findings
-
-
 
     # Number of clusters in labels, ignoring noise if present.
     n_noise = list(labels).count(-1)

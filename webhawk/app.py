@@ -16,6 +16,7 @@ print(response.json())
 # Define input model
 class NameInput(BaseModel):
     hostname: str
+    log_file: str
     logs_content: str
 
 # Health check endpoint
@@ -26,6 +27,6 @@ def root():
 # POST endpoint to log analysis
 @app.post("/scan")
 def scan(input: NameInput):
-    result = main(input.hostname,input.logs_content)
+    result = main(input.hostname,input.log_file,input.logs_content)
     return {"result": result}
 

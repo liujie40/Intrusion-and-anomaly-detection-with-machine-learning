@@ -57,6 +57,9 @@ def get_data(log_file, log_content, log_type, log_size_limit, features, encoding
                     log_content = io.StringIO(file.read())
             else:
                 log_content = io.StringIO(log_content)
+                print("====================================")
+                print(log_content)
+                print("====================================")
             encoded_logs = encode_logs(log_content, log_type,encoding_type)
         except Exception as e:
             logging.info('Something went wrong encoding data.')
