@@ -50,6 +50,14 @@ This service is used to make prompt for LLMs and getting response.
 #### Webhawk web application 
 This service is used to run the web application where the detections results will be treated by cyber analysts.
 
+<p align="center">  
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_app_screenshot_2.png">
+</p>
+
+<p align="center">  
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_app_screenshot_1.png">
+</p>
+
 ### Launching Docker services for the first time 
 If you are running launching the Docker services after the first build then you need to expect some delay for the first agent request, which you can test using the script ./webhawk/api_test.py. In fact this delay is related to downloading the selected Ollama selected model. 
 
