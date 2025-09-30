@@ -22,12 +22,15 @@ source:https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=
 year_threshold:YYYY
 
 [LLM]
-url:http://ollama:11434 #if using docker compose
-url:http://localhost:11434 #if not using docker compose
-model:llama3.2
+# Use the following URL if using docker compose services
+url:http://ollama:11434
+# Use the following URL if NOT using docker compose services
+#url:http://127.0.0.1:11434
+model:intigration/analyzer:latest
 prompt:Analyze this web log line for malicious activity. Provide a brief one pragraph (less than 60 words) as a response. Indidate if there is a known related attack or vulnerability. Do not start with 'This log line'
 
 [WEBAPP]
-webhawk_app
-url:http://webhawk_app:3000/api/v1/incidents #if using docker compose
-url:http://localhost:3000/api/v1/incidents #if not using docker compose
+# Use the following url if using docker compose services
+url:http://webhawk_app:3000/api/v1/incidents
+# Use the following URL if NOT using docker compose services
+#url:http://127.0.0.1:3000/api/v1/incidents
