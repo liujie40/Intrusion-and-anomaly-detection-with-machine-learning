@@ -51,15 +51,15 @@ This service is used to make prompt for LLMs and getting response.
 This service is used to run the web application where the detections results will be treated by cyber analysts.
 
 <p align="center">  
-  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_app_screenshot_2.png">
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_ui_screenshot_2.png">
 </p>
 
 <p align="center">  
-  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_app_screenshot_1.png">
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_ui_screenshot_1.png">
 </p>
 
 ### Launching Docker services for the first time 
-If you are running launching the Docker services after the first build then you need to expect some delay for the first agent request, which you can test using the script ./webhawk/api_test.py. In fact this delay is related to downloading the selected Ollama selected model. 
+If you are running launching the Docker services after the first build then you need to expect some delay for the first agent request, which you can test using the script ./webhawk/api_test.py. In fact this delay is related to downloading the selected Ollama selected model, note that this delay will disappear if you have already added this model pulling to ./ollama_get_models_and_serve.sh.
 
 
 ## Development setup
@@ -111,8 +111,8 @@ model:intigration/analyzer:latest #or select a model of your choice
 prompt:Analyze this web log line for malicious activity. Provide a brief one pragraph (less than 60 words) as a response. Indidate if there is a known related attack or vulnerability. Do not start with 'This log line'
 
 [WEBAPP]
-webhawk_app
-url:http://webhawk_app:3000/api/v1/incidents #if using docker compose
+webhawk_ui
+url:http://webhawk_ui:3000/api/v1/incidents #if using docker compose
 url:http://localhost:3000/api/v1/incidents #if not using docker compose
 ```
 
@@ -208,18 +208,14 @@ response=requests.post("http://127.0.0.1:8000/scan",json=params)
 print(response.json())
 ```
 
-## Deployment using Docker 
-Webhawk can be as webservice using Docker as the following:
-```shell
-docker compose build
-docker compose up
-```
-At this point the API can be used as mentioned above.
-
 ## Used sample data
 
 The data you will find in ./SAMPLE_DATA folder comes from<br>
 https://www.secrepo.com.
+
+## Generating your own testing data
+
+You can alos generate test data using the script ./TESTING_LOGS_GENERATOR/apache_http_log_generator.py
 
 ## Interesting data samples
 
@@ -228,7 +224,10 @@ https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/3QBYB5
 
 
 ## TODO
-Nothing for now.
+Adding more details to the high level design digaram
+Adding finding one by one to Webhawk UI
+Enhancing the UI
+Decoupling data transfer using Kafka (or equivalent)
 
 
 ## Reference

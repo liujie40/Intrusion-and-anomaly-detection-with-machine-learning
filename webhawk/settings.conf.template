@@ -31,6 +31,6 @@ prompt:Analyze this web log line for malicious activity. Provide a brief one pra
 
 [WEBAPP]
 # Use the following url if using docker compose services
-url:http://webhawk_app:3000/api/v1/incidents
+url:http://webhawk_ui:3000/api/v1/incidents
 # Use the following URL if NOT using docker compose services
 #url:http://127.0.0.1:3000/api/v1/incidents

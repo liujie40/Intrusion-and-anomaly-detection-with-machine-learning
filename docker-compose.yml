@@ -7,17 +7,24 @@ services:
       - "8000:8000"
     volumes:
       - ./webhawk:/app
+    depends_on:
+      - ollama
   ollama:
     image: ollama/ollama
-    command: serve
     ports:
       - "11434:11434"
-  webhawk_app:
+    volumes:
+      - ./ollama_get_models_and_serve.sh:/ollama_get_models_and_serve.sh
+      - ollama_data:/root/.ollama
+    entrypoint: ["/bin/sh", "/ollama_get_models_and_serve.sh"]
+  webhawk_ui:
     build:
-      context: ./webhawk_app
+      context: ./webhawk_ui
     working_dir: /app
     command: bash -c "bin/bundle install && bin/rails db:migrate && rm -f tmp/pids/server.pid && bin/bundle exec rails s -p 3000 -b '0.0.0.0'"
     ports:
       - "3000:3000"
     volumes:
-      - ./webhawk_app:/app
+      - ./webhawk_ui:/app
+volumes:
+  ollama_data:

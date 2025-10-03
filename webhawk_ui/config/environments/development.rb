@@ -71,6 +71,6 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
 
-  config.hosts << "webhawk_app"
+  config.hosts << "webhawk_ui"
   
 end

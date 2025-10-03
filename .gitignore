@@ -20,30 +20,30 @@ __pycache__/*
 # `$XDG_CONFIG_HOME/git/ignore` or `~/.config/git/ignore`
 
 # Ignore bundler config.
-/webhawk_app/.bundle
+/webhawk_ui/.bundle
 
 # Ignore all environment files.
-/webhawk_app/.env*
+/webhawk_ui/.env*
 
 # Ignore all logfiles and tempfiles.
-/webhawk_app/log/*
-/webhawk_app/tmp/*
-!/webhawk_app/log/.keep
-!/webhawk_app/tmp/.keep
+/webhawk_ui/log/*
+/webhawk_ui/tmp/*
+!/webhawk_ui/log/.keep
+!/webhawk_ui/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
-/webhawk_app/tmp/pids/*
-!/webhawk_app/tmp/pids/
-!/webhawk_app/tmp/pids/.keep
+/webhawk_ui/tmp/pids/*
+!/webhawk_ui/tmp/pids/
+!/webhawk_ui/tmp/pids/.keep
 
 # Ignore storage (uploaded files in development and any SQLite databases).
-/webhawk_app/storage/*
-!/webhawk_app/storage/.keep
-/webhawk_app/tmp/storage/*
-!/webhawk_app/tmp/storage/
-!/webhawk_app/tmp/storage/.keep
+/webhawk_ui/storage/*
+!/webhawk_ui/storage/.keep
+/webhawk_ui/tmp/storage/*
+!/webhawk_ui/tmp/storage/
+!/webhawk_ui/tmp/storage/.keep
 
-/webhawk_app/public/assets
+/webhawk_ui/public/assets
 
 # Ignore master key for decrypting credentials and more.
-/webhawk_app/config/master.key
+/webhawk_ui/config/master.key
