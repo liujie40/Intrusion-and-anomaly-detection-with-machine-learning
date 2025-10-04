@@ -27,7 +27,7 @@ Webhawk/Catch is an open-source tool. Catch is the unsupervised version of Webha
 ## High level design
 
 <p align="center">  
-  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_design.png">
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_design_v2.png">
 </p>
 
 ## Production services setup
