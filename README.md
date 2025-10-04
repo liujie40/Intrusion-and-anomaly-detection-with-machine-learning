@@ -51,11 +51,11 @@ This service is used to make prompt for LLMs and getting response.
 This service is used to run the web application where the detections results will be treated by cyber analysts.
 
 <p align="center">  
-  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_ui_screenshot_2.png">
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_app_screenshot_2.png">
 </p>
 
 <p align="center">  
-  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_ui_screenshot_1.png">
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_app_screenshot_1.png">
 </p>
 
 ### Launching Docker services for the first time 
