@@ -3,6 +3,10 @@ from catch import *
 
 def main(hostname,log_file,logs_content):
 
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
     get_stats('api')
 
     log_type="apache"
@@ -35,6 +39,8 @@ def main(hostname,log_file,logs_content):
     #log_file_content=open(log_file, 'r')
     log_file_content=logs_content
 
+    logger.info('> Getting data..')
+
     data = get_data(
         log_file, # No log_file as the logs as provided as a string
         log_file_content,
@@ -49,7 +55,8 @@ def main(hostname,log_file,logs_content):
         dataframe = data.to_numpy()[:,list(range(0,len(FEATURES)-1))]
     else:
         dataframe = data
-
+    
+    logger.info('> Preporcessing data..')
     # Standarize data
     if standardize_data:
         dataframe = sklearn.preprocessing.StandardScaler().fit_transform(dataframe)
@@ -79,6 +86,7 @@ def main(hostname,log_file,logs_content):
         logging.info('{}{}'.format(4*' ', best_eps_for_silouhette))
         selected_eps = best_eps_for_silouhette
 
+    logger.info('> Detection..')
     # Use dbscan for clustering and train the model
 
     if eps == None and min_samples == None:
@@ -156,7 +164,11 @@ def main(hostname,log_file,logs_content):
 
     report=True
     sync_app=True
-    print(all_findings)
+    #print(all_findings)
+
+
+
+    logger.info('> Getting findings..')
 
     if cves_finding==True or ai_advice==True:
         # Pull model if not available 
@@ -164,21 +176,13 @@ def main(hostname,log_file,logs_content):
 
     
     if cves_finding == True:
-        logging.info('> Finding CVEs started')
+        logger.info('> Finding CVEs..')
         all_findings = find_cves(all_findings)
     
     if ai_advice == True:
+        logger.info('> Getting LLM advices..')
         logging.info('> Getting AI advice started')
         all_findings = get_llm_insights(all_findings)
-
-    # Generate a HTML report if requested
-    if report:
-        #find_cves(all_findings)
-        gen_report(
-            all_findings,log_file,
-            log_type,
-            config['LLM']['model']
-            )
     
     if sync_app==True:
         submit_to_app(hostname,all_findings,log_file,log_type,config['LLM']['model'])    

@@ -57,9 +57,7 @@ def get_data(log_file, log_content, log_type, log_size_limit, features, encoding
                     log_content = io.StringIO(file.read())
             else:
                 log_content = io.StringIO(log_content)
-                print("====================================")
-                print(log_content)
-                print("====================================")
+                logging.info('Logs has successfully been loaded from client..')
             encoded_logs = encode_logs(log_content, log_type,encoding_type)
         except Exception as e:
             logging.info('Something went wrong encoding data.')
@@ -325,6 +323,7 @@ def find_cves(findings):
 
 # Find CVE(s) relared to the attack trace based on LLM
 def find_cves_(findings):
+    print('> Finding related CVEs')
     bad_chars = ['/','?','=','&','%','#']
     enriched_findings = []
     checked_candidate_strings = {}
@@ -372,7 +371,6 @@ def get_llm_insights(findings):
         current+=1
         finding['ai_advice'] = ''
         final_requested_url = finding['log_line'].split('"')[1].split(' ')[1]
-        print('> Getting LLM insights')
         url='{}/api/generate'.format(config['LLM']['url'])
         data = {
                 "model": config['LLM']['model'],
