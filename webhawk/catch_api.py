@@ -3,7 +3,6 @@ from catch import *
 
 def main(hostname,log_file,logs_content):
 
-
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
 
@@ -164,26 +163,24 @@ def main(hostname,log_file,logs_content):
 
     report=True
     sync_app=True
-    #print(all_findings)
 
-
-
-    logger.info('> Getting findings..')
+    logger.info('> Enriching findings..')
 
     if cves_finding==True or ai_advice==True:
         # Pull model if not available 
         pull_model(config['LLM']['model'],config['LLM']['url'])
 
+    for finding in all_findings:
+        if cves_finding == True:
+            logger.info('> Finding CVEs..')
+            all_findings = find_cves([finding])
     
-    if cves_finding == True:
-        logger.info('> Finding CVEs..')
-        all_findings = find_cves(all_findings)
+        if ai_advice == True:
+            logger.info('> Getting LLM advices..')
+            logging.info('> Getting AI advice started')
+            all_findings = get_llm_insights([finding])
     
-    if ai_advice == True:
-        logger.info('> Getting LLM advices..')
-        logging.info('> Getting AI advice started')
-        all_findings = get_llm_insights(all_findings)
-    
-    if sync_app==True:
-        submit_to_app(hostname,all_findings,log_file,log_type,config['LLM']['model'])    
+        if sync_app==True:
+            submit_to_app(hostname,[finding],log_file,log_type,config['LLM']['model'])
+
     return all_findings
