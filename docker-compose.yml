@@ -16,9 +16,9 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - ./ollama_get_models_and_serve.sh:/ollama_get_models_and_serve.sh
+      - ./ollama_starter.sh:/ollama_starter.sh
       - ollama_data:/root/.ollama
-    entrypoint: ["/bin/sh", "/ollama_get_models_and_serve.sh"]
+    entrypoint: ["/bin/sh", "/ollama_starter.sh"]
   webhawk_ui:
     build:
       context: ./webhawk_ui
