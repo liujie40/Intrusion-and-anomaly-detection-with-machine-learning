@@ -57,7 +57,7 @@ def get_data(log_file, log_content, log_type, log_size_limit, features, encoding
                     log_content = io.StringIO(file.read())
             else:
                 log_content = io.StringIO(log_content)
-                logging.info('Logs has successfully been loaded from client..')
+                logging.info('Logs have successfully been loaded from client..')
             encoded_logs = encode_logs(log_content, log_type,encoding_type)
         except Exception as e:
             logging.info('Something went wrong encoding data.')
@@ -281,7 +281,7 @@ def extract_filenames_from_url(http_url: str, param_name='file') -> list:
     return filenames
 
 
-
+"""
 # This function will be removed as it has been replaced with a new find_cves which is LLM based 
 def find_cves(findings):
     bad_chars = ['/','?','=','&','%','#']
@@ -335,7 +335,7 @@ def find_cves_(findings):
             print('> Finding CVEs')
             url='{}/api/generate'.format(config['LLM']['url'])
             data = {
-                    "model": 'llama3.2:latest',
+                    "model": config['LLM']['model'],
                     "prompt": (
                         "Find the CVE(s) related to \"{}\". If you can't help or if you don't find anything return \"None\" and do not return any text.  Return only a one line list of CVEs separated by commas.".format(final_requested_url)
                     ),                        "stream": False,
@@ -345,6 +345,35 @@ def find_cves_(findings):
                 finding['cve'] = response.json()['response'].replace(" ","").replace(","," ")
             else:
                 finding['cve'] = ''
+
+        enriched_findings.append(finding)
+    return enriched_findings
+"""
+
+
+def find_cves(findings):
+    print('> Finding related CVEs')
+    enriched_findings = []
+    checked_candidate_strings = {}
+    for finding in findings:
+        # Only find CVE for the high severity findings
+        if finding['severity'] == 'high':
+            finding['cve'] = ''
+            final_requested_url = finding['log_line'].split('"')[1].split(' ')[1]
+            print('> Finding CVEs')
+            url='{}/api/generate'.format(config['LLM']['url'])
+            data = {
+                    "model": config['LLM']['model'],
+                    "prompt": (
+                        "Extract all the CVE(s) from \"{}\". If don't find anything return \"None\" and do not return any text.  Return only a one line list of CVEs separated by commas.".format(finding['ai_advice'])
+                    ),                        "stream": False,
+            }
+            response = requests.post(url, json=data)
+            if "CVE-" in response.json()['response']:
+                finding['cve'] = response.json()['response'].replace(" ","").replace(","," ")
+            else:
+                finding['cve'] = ''
+
         enriched_findings.append(finding)
     return enriched_findings
 

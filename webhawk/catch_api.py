@@ -171,14 +171,13 @@ def main(hostname,log_file,logs_content):
         pull_model(config['LLM']['model'],config['LLM']['url'])
 
     for finding in all_findings:
-        if cves_finding == True:
-            logger.info('> Finding CVEs..')
-            all_findings = find_cves([finding])
-    
         if ai_advice == True:
             logger.info('> Getting LLM advices..')
             logging.info('> Getting AI advice started')
             all_findings = get_llm_insights([finding])
+            if cves_finding == True:
+                logger.info('> Finding CVEs..')
+                all_findings = find_cves([finding])
     
         if sync_app==True:
             submit_to_app(hostname,[finding],log_file,log_type,config['LLM']['model'])
