@@ -21,9 +21,8 @@
       <% if incident.user_id!=nil %>
       <%= User.find(incident.user_id).email %>
       <% else %>
-        <i>This incident has not yet been assigned</i>
-        <br>
-        <button class="ui mini blue button" onclick="if (confirm('You will be the responsible of this incident')) {document.getElementById('assign_to_me_form').submit();}">Assign to me </button>
+               <button class="ui mini blue button" onclick="if (confirm('You will be the responsible of this incident')) {document.getElementById('assign_to_me_form').submit();}">Assign to me </button>
+(<i>This incident has not yet been assigned</i>)
       <% end %>
     </td>
   </tr>
@@ -32,7 +31,7 @@
     <td><%= incident.status%></td>
   </tr>
   <tr>
-    <td>Attack vector</td>
+    <td>vector</td>
     <td><%= incident.attack_vector%></td>
   </tr>
   <tr>
@@ -55,12 +54,20 @@
     <td style="word-break: break-word; white-space: normal;"><%= incident.log_line_content%></td>
   </tr>
   <tr>
-    <td>LLM Insights</td>
+    <td>AI Insights</td>
     <td><%= incident.llm_insights%></td>
   </tr>
   <tr>
-    <td>CVE(s)</td>
+    <td>Associated CVE</td>
     <td><%= raw(incident.cves) %></td>
+  </tr>
+  <tr>
+    <td>Associated OWASP</td>
+    <td><%= raw(incident.owasp) %></td>
+  </tr>
+  <tr>
+    <td>Recommendation</td>
+    <td><%= raw(incident.recommendation) %></td>
   </tr>
 </table>
 <!--
@@ -98,7 +105,7 @@
   </p>
 
   <p>
-    <strong>LLM Insights:</strong>
+    <strong>AI Insights:</strong>
     <%= incident.llm_insights %>
   </p>
 

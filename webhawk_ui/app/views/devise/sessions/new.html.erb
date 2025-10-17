@@ -1,13 +1,15 @@
+<div class="ui form" style="width:40%;margin-left:30%;margin-top:50px;margin-bottom:100px;border-radius:10px;background-color:whitesmoke;padding:30px;border-style:solid;border-color:gainsboro">
+
 <h2>Log in</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email %>
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
   <div class="field">
-    <%= f.label :password %><br />
+    <%= f.label :password %>
     <%= f.password_field :password, autocomplete: "current-password" %>
   </div>
 
@@ -24,3 +26,4 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>

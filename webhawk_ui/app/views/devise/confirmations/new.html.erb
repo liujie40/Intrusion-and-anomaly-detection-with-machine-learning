@@ -1,3 +1,5 @@
+<div class="ui form" style="width:40%;margin-left:30%;margin-top:50px;margin-bottom:100px;border-radius:10px;background-color:whitesmoke;padding:30px;border-style:solid;border-color:gainsboro">
+
 <h2>Resend confirmation instructions</h2>
 
 <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
@@ -14,3 +16,5 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+</div>

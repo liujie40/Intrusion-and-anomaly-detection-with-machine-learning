@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "endpoints/index"
   devise_for :users
   resources :incidents
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -34,6 +35,10 @@ Rails.application.routes.draw do
   post 'assign_incident', to: 'incidents#assign_incident', as: :assign_incident
   get 'find_incidents', to: 'incidents#index', as: :find_incidents
   get 'tasks', to: 'incidents#tasks'
+
+
+  get 'endpoints', to: 'endpoints#index'
+
 
   
 end

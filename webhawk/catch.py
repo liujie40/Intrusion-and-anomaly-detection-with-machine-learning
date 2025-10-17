@@ -391,6 +391,7 @@ def pull_model(model_name,url):
         print(response.text)
 
 
+
 def get_llm_insights(findings):
     enriched_findings = []
     current=1
@@ -401,15 +402,57 @@ def get_llm_insights(findings):
         finding['ai_advice'] = ''
         final_requested_url = finding['log_line'].split('"')[1].split(' ')[1]
         url='{}/api/generate'.format(config['LLM']['url'])
+        prompt="{} {}".format(config['LLM']['prompt'],finding['log_line'])
         data = {
                 "model": config['LLM']['model'],
                 "prompt": (
-                    "{} {}".format(config['LLM']['prompt'],finding['log_line'])
+                   prompt
                 ),
                 "stream": False,
         }
+        
         response = requests.post(url, json=data)
-        finding['ai_advice'] = response.json()['response']
+        """"
+        print("========================")
+        print(response.text)
+        print("========================")
+        """
+        initial_llm_insights=response.json()['response']
+
+
+        #refined_llm_insights
+        refinement_prompt = f"""
+        You are a cybersecurity analysis reviewer and refiner.
+
+        User asked:
+        {prompt}
+
+        Provided analysis:
+        {initial_llm_insights}
+
+        Step 1: Briefly evaluate the provided analyis by making sure that it is correct and make sure that the provided CVEs and OWASPs actually exist.
+        Step 2: If improvement is needed, provide a refined analysis.
+        If the original analysis is already correct, return it unchanged."""
+
+        data = {
+                "model": config['LLM']['model'],
+                "prompt": (
+                   prompt
+                ),
+                "stream": False,
+        }
+        
+        response = requests.post(url, json=data)
+        refined_llm_insights=response.json()['response']
+
+
+        #finding['ai_advice'] = initial_llm_insights
+        finding['ai_advice'] = refined_llm_insights
+        #finding['refined_ai_advice'] = refined_llm_insights
+        """
+        print(initial_llm_insights)
+        print(refined_llm_insights)
+        """
         enriched_findings.append(finding)
     return enriched_findings
 

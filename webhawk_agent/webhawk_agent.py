@@ -22,11 +22,11 @@ args = parser.parse_args()
 with open(args.log_file,'r') as f:
     logs=str(f.read())
 
-params = {"hostname":socket.gethostname(),"logs_content":logs,"log_file":args.log_file}
+data = {"hostname":socket.gethostname(),"logs_content":logs,"log_file":args.log_file}
 
 try:
     print('Your logs are being processed..')
-    response=requests.post("http://{}:{}/scan".format(config['WEBHAWK']['server_ip'],config['WEBHAWK']['server_port']),json=params)
+    response=requests.post("http://{}:{}/scan".format(config['WEBHAWK']['server_ip'],config['WEBHAWK']['server_port']),json=data)
     print(response.json())
 except:
     print('Not able to reach webhawk service.\nMake sure that your webhawk server is up that that detection service is running.\nExiting..')

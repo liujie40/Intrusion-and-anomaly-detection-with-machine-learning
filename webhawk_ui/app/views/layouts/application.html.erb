@@ -21,13 +21,25 @@
   </head>
 
   <body>
-    <h2 style="color:rgb(46, 43, 53);"><code>Webhawk Incident Management</code></h2>
+
+
+
+
+<h2 class="ui header">
+  <%= image_tag "hawk-2.jpg", class:"ui big image"%>
+  <div class="content">
+    Webhawk
+  </div>
+</h2>
+
+
     
 
 
     <div class="ui inverted menu" style="background-color: rgb(46, 43, 53);">
-    <a class="item" href='/incidents'><i class="bug icon"></i>Incidents</a>
-    <a class="item" href='/tasks'><i class="tasks icon"></i>My Tasks</a>
+    <a class="item" href='/incidents'><i class=" bug icon"></i>Incidents</a>
+    <a class="item" href='/tasks'><i class=" tasks icon"></i>My Tasks</a>
+    <a class="item" href='/endpoints'><i class=" computer icon"></i>Endpoints</a>
       <div class="right menu">
         <% if user_signed_in? %>
           <a class="item"><i class="user circle icon"></i><%= current_user.email %></a>
@@ -41,12 +53,13 @@
     </div>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+
     <%= yield %>
 
     <br>
     <br>
 
-    <center><i class="github icon"></i>Webhawk App 2025</center>
+    <center><%= image_tag "hawk-2.jpg", class:"ui mini image"%>Webhawk incident management 2025</center>
 
     <br>
     <br>

@@ -1,5 +1,6 @@
 
 from catch import *
+import json
 
 def main(hostname,log_file,logs_content):
 
@@ -174,12 +175,36 @@ def main(hostname,log_file,logs_content):
         if ai_advice == True:
             logger.info('> Getting LLM advices..')
             logging.info('> Getting AI advice started')
-            all_findings = get_llm_insights([finding])
-            if cves_finding == True:
-                logger.info('> Finding CVEs..')
-                all_findings = find_cves([finding])
+            updated_finding = get_llm_insights([finding])
+
+            raw_ai_advice=updated_finding[0]['ai_advice']
+
+            try:
+                json_ai_advice=json.loads(raw_ai_advice)
+            except:
+                print("%"*1000)
+                # Fix the json formatting using LLM
+                url='{}/api/generate'.format(config['LLM']['url'])
+                data = {
+                        "model": config['LLM']['model'],
+                        "prompt": (
+                            "This JSON has a problem, it cannot be loaded using python json.loads: \"{}\".\n Fix it and return the fixed version.".format(raw_ai_advice)
+                        ),
+                        "stream": False,
+                }
+                response = requests.post(url, json=data)
+                json_ai_advice=json.loads(response)
+
+            updated_finding[0]['ai_advice'] = json_ai_advice['details']
+
+            if json_ai_advice['potential_attack_attempt']==False:
+                updated_finding[0]['severity'] = 'low'
+
+            updated_finding[0]['cve']= json_ai_advice['CVE']
+            updated_finding[0]['recommendation']= json_ai_advice['recommendation']
+            updated_finding[0]['owasp']= json_ai_advice['owasp']
     
         if sync_app==True:
-            submit_to_app(hostname,[finding],log_file,log_type,config['LLM']['model'])
+            submit_to_app(hostname,updated_finding,log_file,log_type,config['LLM']['model'])
 
-    return all_findings
+    return 'Success'

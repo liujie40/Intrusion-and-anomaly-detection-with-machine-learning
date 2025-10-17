@@ -336,7 +336,8 @@ def gen_report(findings,log_file,log_type,llm_model):
 
         cves=''
         if 'cve' in finding and finding['cve']!='':
-            cve_list = finding['cve'].split(' ')
+
+            cve_list = finding['cve'].split(' ') if type(finding['cve'])==str else finding['cve']
             if len(cve_list)>0:
                 cve_list.reverse()
                 for cve in cve_list:
@@ -385,7 +386,7 @@ def submit_to_app(hostname,findings,log_file,log_type,llm_model):
 
         cves=''
         if 'cve' in finding and finding['cve']!='':
-            cve_list = finding['cve'].split(' ')
+            cve_list = finding['cve'].split(' ') if type(finding['cve'])==str else finding['cve']
             if len(cve_list)>0:
                 cve_list.reverse()
                 for cve in cve_list:
@@ -401,6 +402,12 @@ def submit_to_app(hostname,findings,log_file,log_type,llm_model):
             background='orange'
         if severity == 'high':
             background='OrangeRed'
+
+
+        if len(finding['owasp'])>0:
+            owasp='<br>'.join(finding['owasp'])
+        else:
+            owasp=cves='<i>No OWASP found</i>'
 
         ai_advice=finding['ai_advice'] if 'ai_advice' in finding else 'N/A'
 
@@ -419,7 +426,9 @@ def submit_to_app(hostname,findings,log_file,log_type,llm_model):
                 "log_line":finding['log_line_number'],
                 "log_line_content":finding['log_line'],
                 "attack_vector": "Web",
-                "host":hostname
+                "host":hostname,
+                "owasp":owasp,
+                "recommendation":finding['recommendation']
             }
         }
 

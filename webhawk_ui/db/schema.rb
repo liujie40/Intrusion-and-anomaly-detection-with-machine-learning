@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_09_100241) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_08_212506) do
   create_table "incidents", force: :cascade do |t|
     t.string "description"
     t.string "attack_vector"
@@ -26,6 +26,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_100241) do
     t.string "status"
     t.string "verdict"
     t.string "host"
+    t.text "owasp"
+    t.text "recommendation"
   end
 
   create_table "users", force: :cascade do |t|

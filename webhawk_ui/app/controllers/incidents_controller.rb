@@ -6,7 +6,7 @@ class IncidentsController < ApplicationController
     if params[:search]==nil or params[:search]==''
       @incidents = Incident.all
     else
-    @incidents=Incident.where("log_line_content LIKE ?", "%"+params[:search]+"%")
+    @incidents=Incident.where("log_line_content LIKE ? or llm_insights LIKE ?", "%"+params[:search]+"%","%"+params[:search]+"%")
     end 
   end
 
@@ -72,7 +72,8 @@ class IncidentsController < ApplicationController
   def assign_incident
     @incident=Incident.find(params[:incident_id])
     @incident.update(user_id:current_user.id)
-    redirect_to @incident
+    #redirect_to @incident
+    redirect_to edit_incident_path(@incident)
   end 
 
   def find_incidents
