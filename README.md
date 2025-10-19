@@ -61,6 +61,13 @@ This service is used to run the web application where the detections results wil
 ### Launching Docker services for the first time 
 If you are running launching the Docker services after the first build then you need to expect some delay for the first agent request, which you can test using the script ./webhawk/api_test.py. In fact this delay is related to downloading the selected Ollama selected model, note that this delay will disappear if you have already added this model pulling to ./ollama_get_models_and_serve.sh.
 
+### Agent
+To make detection within your endpoints you need to configure and execute webhawk agent which is available in ./webhawk_agent.
+```shell
+python webhawk_agent.py -l ./HTTP_LOGS/access.log.2025-02-08
+```
+Once the execution is done new incidents will appear in Webhawk web application.
+
 
 ## Development setup
 
