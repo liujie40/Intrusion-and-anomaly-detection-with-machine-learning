@@ -5,16 +5,26 @@
   <!-- Add any fields here -->
 <% end %>
 
+    <h1 class="ui grey header">
+  <%= 'INC'+incident.id.to_s %>
+  <div class="sub header"><%= incident.created_at.to_s.sub('UTC','')%></div>
+</h1>
 
-<table>
-  <tr>
+<div class="ui grid">
+  <div class="seven wide column">
+
+
+
+
+  <table>
+  <!--<tr>
     <td width='10%'>ID</td>
     <td><%= 'INC'+incident.id.to_s %></td>
   </tr>
   <tr>
     <td>Date</td>
     <td><%= incident.created_at.to_s.sub('UTC','')%></td>
-  </tr>
+  </tr>-->
   <tr>
     <td>Owner</td>
     <td>
@@ -53,10 +63,12 @@
     <td>Artifact</td>
     <td style="word-break: break-word; white-space: normal;"><%= incident.log_line_content%></td>
   </tr>
+  <!--
   <tr>
     <td>AI Insights</td>
     <td><%= incident.llm_insights%></td>
   </tr>
+  -->
   <tr>
     <td>Associated CVE</td>
     <td><%= raw(incident.cves) %></td>
@@ -65,20 +77,41 @@
     <td>Associated OWASP</td>
     <td><%= raw(incident.owasp) %></td>
   </tr>
+  <!--
   <tr>
     <td>Recommendation</td>
     <td><%= raw(incident.recommendation) %></td>
   </tr>
+  -->
 </table>
-<!--
+  </div>
 
-<div class="ui grid">
-  <div class=" two wide column">ID</div><div class=" red fourteen wide column"><%= 'INC'+incident.id.to_s %></div>
-  <div class=" two wide column">Date</div><div class=" fourteen wide column"><%= incident.created_at.to_s.sub('UTC','') %></div>
+  <div class=" five wide column">
+  <h3 class="ui header">
+  AI Insights
+  <div class="sub header">AI Analysis of the detection</div>
+</h2>
+<p>
+<%= incident.llm_insights%>
+</p>
+  </div>
+
+
+    <div class=" four wide column">
+  <h3 class="ui header">
+  Recommendations
+  <div class="sub header">AI recommendation</div>
+</h2>
+<p>
+<%= incident.recommendation%>
+</p>
+  </div>
+
+
 </div>
 
 
-
+<!--
   <p>
     <strong>ID:</strong>
     <%= 'INC'+incident.id.to_s %>
@@ -117,6 +150,10 @@
   -->
 
 </div>
+
+
+
+
 
 
 

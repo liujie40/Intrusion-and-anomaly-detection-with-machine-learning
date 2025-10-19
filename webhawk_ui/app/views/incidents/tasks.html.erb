@@ -14,7 +14,7 @@
       <%= form_with url: :find_incidents, method: :get, html: { id: 'find_incidents_form', class:'ui form'} do %>
      
 
-        <input class="prompt" type="text" placeholder="Find incidents..." name="search" onchange="document.getElementById('find_incidents_form').submit();">
+        <input class="prompt" type="text" placeholder="Find incidents..." value="<%= params[:search]%>" name="search" onchange="document.getElementById('find_incidents_form').submit();" style="width:300px;">
          <% end %>
 
         <i class="search icon"></i>

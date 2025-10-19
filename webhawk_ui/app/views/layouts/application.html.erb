@@ -25,12 +25,39 @@
 
 
 
-<h2 class="ui header">
-  <%= image_tag "hawk-2.jpg", class:"ui big image"%>
+
+
+<div class="ui grid">
+  <div class="four wide column">
+  <h2 class="ui header">
+  <%= image_tag "hawk-2.jpg", class:"ui small image"%>
   <div class="content">
-    Webhawk
+    <code>Webhawk</code>
   </div>
 </h2>
+  </div>
+  <div class="four wide column"></div>
+  <div class="five wide column"></div>
+  <div class="three wide column">
+
+  <div align="right">
+<br>
+  <a class="item">
+    <%= Incident.where(severity:'high').count %>
+    <div class="ui red horizontal label">High</div>
+  </a>
+  <a class="item">
+    <%= Incident.where(severity:'medium').count %>
+    <div class="ui orange horizontal label">Medium</div>
+  </a>
+  <a class="item">
+    <%= Incident.where(severity:'low').count %>
+    <div class="ui grey horizontal label">Low</div>
+  </a>
+</div>
+  </div>
+</div>
+
 
 
     
