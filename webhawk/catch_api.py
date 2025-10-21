@@ -172,6 +172,7 @@ def main(hostname,log_file,logs_content):
         pull_model(config['LLM']['model'],config['LLM']['url'])
 
     for finding in all_findings:
+        data_is_ok=True 
         if ai_advice == True:
             logger.info('> Getting LLM advices..')
             logging.info('> Getting AI advice started')
@@ -182,6 +183,11 @@ def main(hostname,log_file,logs_content):
             try:
                 json_ai_advice=json.loads(raw_ai_advice)
             except:
+                logging.info('> JSON parsing issue encountred')
+                logging.info(raw_ai_advice)
+
+                data_is_ok=False
+                """"
                 print("%"*1000)
                 # Fix the json formatting using LLM
                 url='{}/api/generate'.format(config['LLM']['url'])
@@ -194,17 +200,19 @@ def main(hostname,log_file,logs_content):
                 }
                 response = requests.post(url, json=data)
                 json_ai_advice=json.loads(response)
-
-            updated_finding[0]['ai_advice'] = json_ai_advice['details']
-
-            if json_ai_advice['potential_attack_attempt']==False:
-                updated_finding[0]['severity'] = 'low'
-
-            updated_finding[0]['cve']= json_ai_advice['CVE']
-            updated_finding[0]['recommendation']= json_ai_advice['recommendation']
-            updated_finding[0]['owasp']= json_ai_advice['owasp']
+                """
     
-        if sync_app==True:
+            if data_is_ok==True:
+                updated_finding[0]['ai_advice'] = json_ai_advice['details']
+
+                if json_ai_advice['potential_attack_attempt']==False:
+                    updated_finding[0]['severity'] = 'low'
+
+                updated_finding[0]['cve']= json_ai_advice['CVE']
+                updated_finding[0]['recommendation']= json_ai_advice['recommendation']
+                updated_finding[0]['owasp']= json_ai_advice['owasp']
+    
+        if sync_app==True and data_is_ok:
             submit_to_app(hostname,updated_finding,log_file,log_type,config['LLM']['model'])
 
     return 'Success'
