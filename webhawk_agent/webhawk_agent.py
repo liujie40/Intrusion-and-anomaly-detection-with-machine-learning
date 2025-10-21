@@ -19,8 +19,18 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-with open(args.log_file,'r') as f:
-    logs=str(f.read())
+try:
+    with open(args.log_file,'r') as f:
+        logs=f.read()
+except FileNotFoundError:
+    print(f"Error: The file {args.log_file} does not exist.")
+    sys.exit(1)
+except PermissionError:
+    print(f"Error: Permission denied when accessing {args.log_file}.")
+    sys.exit(1)
+except Exception as e:
+    print(f"Unexpected error while reading the file: {e}")
+    sys.exit(1)
 
 data = {"hostname":socket.gethostname(),"logs_content":logs,"log_file":args.log_file}
 
