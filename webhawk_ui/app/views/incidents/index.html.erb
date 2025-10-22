@@ -80,8 +80,8 @@
         </td>
 
 
-      <td style="word-break: break-word; white-space: normal;"><%=  truncate(incident.log_line_content, length: 100)%></td>
-      <td style="word-break: break-word; white-space: normal;"><%= truncate(incident.llm_insights, length: 100) %></td>
+      <td class="turncate"><%=  truncate(incident.log_line_content, length: 100)%></td>
+      <td class="turncate"><%= truncate(incident.llm_insights, length: 100) %></td>
     </tr>
     <% end %>
   </tbody>
