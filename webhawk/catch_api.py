@@ -181,38 +181,28 @@ def main(hostname,log_file,logs_content):
             raw_ai_advice=updated_finding[0]['ai_advice']
 
             try:
-                json_ai_advice=json.loads(raw_ai_advice)
+                json_ai_advice=json.loads(raw_ai_advice.replace('\\',''))
             except:
                 logging.info('> JSON parsing issue encountred')
                 logging.info(raw_ai_advice)
-
                 data_is_ok=False
-                """"
-                print("%"*1000)
-                # Fix the json formatting using LLM
-                url='{}/api/generate'.format(config['LLM']['url'])
-                data = {
-                        "model": config['LLM']['model'],
-                        "prompt": (
-                            "This JSON has a problem, it cannot be loaded using python json.loads: \"{}\".\n Fix it and return the fixed version.".format(raw_ai_advice)
-                        ),
-                        "stream": False,
-                }
-                response = requests.post(url, json=data)
-                json_ai_advice=json.loads(response)
-                """
     
             if data_is_ok==True:
                 updated_finding[0]['ai_advice'] = json_ai_advice['details']
 
                 if json_ai_advice['potential_attack_attempt']==False:
                     updated_finding[0]['severity'] = 'low'
+                else:
+                    updated_finding[0]['severity']= json_ai_advice['severity']
+
 
                 updated_finding[0]['cve']= json_ai_advice['CVE']
                 updated_finding[0]['recommendation']= json_ai_advice['recommendation']
                 updated_finding[0]['owasp']= json_ai_advice['owasp']
+                
     
         if sync_app==True and data_is_ok:
             submit_to_app(hostname,updated_finding,log_file,log_type,config['LLM']['model'])
-
+            
+    # More details to be added to http return json
     return 'Success'
