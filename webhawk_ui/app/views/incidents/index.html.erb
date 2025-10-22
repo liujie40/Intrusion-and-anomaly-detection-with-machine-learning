@@ -32,21 +32,19 @@
 <%else%>
 
 
-<table class="ui compact table">
+<table class="ui compact table" width='100%'>
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Date</th>
-      <th>Host</th>
-       <th>Owner</th>
-      <th>Status</th>
-      <th>Verdict</th>
-      <th>Vector</th>
-      <!--<th>Related CVE(s)</th>-->
-      <th>Severity</th>
-      <!--<th>Log line #</th>-->
-      <th>Artifact(s)</th>
-      <th>AI Insights</th>
+      <th style='width:5%'>ID</th>
+      <th style='width:10%'>Date</th>
+      <th style='width:10%'>Host</th>
+      <th style='width:5%'>Owner</th>
+      <th style='width:5%'> Status</th>
+      <th style='width:5%'>Verdict</th>
+      <th style='width:5%'>Vector</th>
+      <th style='width:5%'>Severity</th>
+      <th style='width:25%'>Artifact(s)</th>
+      <th style='width:25%'>AI Insights</th>
     </tr>
   </thead>
   <tbody>
@@ -67,10 +65,9 @@
       <td data-label="Name"><%= incident.status %></td>
       <td data-label="Name"><%= incident.verdict %></td>
 
-      <td data-label="Age"><%= incident.attack_vector %></td>
-      <!--<td data-label="Age"><%= raw(incident.cves) %></td>-->
+      <td><%= incident.attack_vector %></td>
       
-      <td data-label="Age">
+      <td >
       <% if incident.severity == 'high' %>
       <div class="ui small red horizontal label" style="width:60px"><%= incident.severity.capitalize %></div>
        <% end %>
@@ -83,9 +80,8 @@
         </td>
 
 
-      <!--<td data-label="Age"><%= incident.log_line %></td>-->
-      <td data-label="Age" style="word-break: break-word; white-space: normal;"><%=  truncate(incident.log_line_content, length: 100)%></td>
-      <td data-label="Age"><%= truncate(incident.llm_insights, length: 100) %></td>
+      <td style="word-break: break-word; white-space: normal;"><%=  truncate(incident.log_line_content, length: 100)%></td>
+      <td style="word-break: break-word; white-space: normal;"><%= truncate(incident.llm_insights, length: 100) %></td>
     </tr>
     <% end %>
   </tbody>
