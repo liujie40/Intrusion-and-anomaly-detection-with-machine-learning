@@ -1,8 +1,4 @@
 
-
-
-
-
 <div class="ui grid">
   <div class="four wide column"><h3>Incidents</h3></div>
   <div class="four wide column"></div>
@@ -48,7 +44,7 @@
     </tr>
   </thead>
   <tbody>
-  <% @incidents.reverse.each do |incident| %>
+  <% @incidents.each do |incident| %>
     <tr>
       <td data-label="Name"><%= link_to 'INC'+incident.id.to_s, incident %></td>
       <td data-label="Name"><%= incident.created_at.to_s.sub('UTC','') %></td>
@@ -86,7 +82,13 @@
     <% end %>
   </tbody>
 </table>
+
 <% end %>
+
+<center>
+<%= paginate @incidents %>
+</center>
+
 
 <p style="color: green"><%= notice %></p>
 

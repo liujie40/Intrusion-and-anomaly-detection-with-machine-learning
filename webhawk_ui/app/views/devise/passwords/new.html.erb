@@ -1,6 +1,8 @@
 
 <div class="ui form devise">
 
+<%= render "devise/shared/logo" %>
+
 <h2>Forgot your password?</h2>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
@@ -12,7 +14,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
+        <button class="ui button" style="background-color:#123456;color:white">Send me reset password instructions</button>
   </div>
 <% end %>
 

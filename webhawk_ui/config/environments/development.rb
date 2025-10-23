@@ -72,5 +72,6 @@ Rails.application.configure do
 
 
   config.hosts << "webhawk_ui"
+  config.hosts << "webhawk"
   
 end

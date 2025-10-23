@@ -3,11 +3,17 @@ class IncidentsController < ApplicationController
 
   # GET /incidents or /incidents.json
   def index
+
+    
     if params[:search]==nil or params[:search]==''
-      @incidents = Incident.all
+      @incidents = Incident.all.order("created_at DESC")
     else
-    @incidents=Incident.where("log_line_content LIKE ? or llm_insights LIKE ?", "%"+params[:search]+"%","%"+params[:search]+"%")
+      @incidents=Incident.where("log_line_content LIKE ? or llm_insights LIKE ?", "%"+params[:search]+"%","%"+params[:search]+"%").order("created_at DESC")
     end 
+    @incidents = @incidents.page(params[:page]).per(10)
+    
+
+
   end
 
 

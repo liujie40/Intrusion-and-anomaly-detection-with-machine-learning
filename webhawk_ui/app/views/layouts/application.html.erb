@@ -26,15 +26,16 @@
 
 
 
-
+<% if user_signed_in? %>
 <div class="ui grid">
   <div class="four wide column">
-  <h2 class="ui header">
-  <%= image_tag "hawk-2.jpg", class:"ui small image"%>
+  <h1 class="ui header">
+  <%= image_tag "hawk-icon.png", class:"ui massive image"%>
   <div class="content">
-    <code>Webhawk</code>
+    Webhawk
+    <div class="sub header">All you need is logs.</div>
   </div>
-</h2>
+</h1>
   </div>
   <div class="six wide column"></div>
   <div class=" six wide column">
@@ -61,7 +62,6 @@
 
     
 
-
     <div class="ui inverted menu" style="background-color: rgb(46, 43, 53);">
     <a class="item" href='/incidents'><i class=" bug icon"></i>Incidents</a>
     <a class="item" href='/tasks'><i class=" tasks icon"></i>My Tasks</a>
@@ -80,14 +80,19 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
+<% end %>
+
     <%= yield %>
 
-    <br>
-    <br>
 
-    <center><%= image_tag "hawk-2.jpg", class:"ui mini image"%>Webhawk incident management 2025</center>
+    <center><%= image_tag "hawk-icon.png", class:"ui mini image"%>© Webhawk 2025
+    <br>
+    
+        <a href='https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning'><i class="github icon"></i>Github</a>
+        <a href='https://www.linkedin.com/in/walid-daboubi/'><i class="linkedin icon"></i>Linkedin</a>
 
-    <br>
-    <br>
+        
+        </center>
+<br>
   </body>
 </html>

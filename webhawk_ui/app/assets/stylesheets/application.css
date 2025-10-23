@@ -11,8 +11,20 @@
 
 
 html body {
-  padding: 50px !important;
+  padding: 20px !important;
 }
+
+.devise{
+  width: 50%;
+  max-width: 400px;
+  margin: 100px auto 100px auto;
+  border-radius: 10px;
+background-color: #f9f9f9;
+  padding: 30px;
+border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 
 .snippet{
   font-size:12px;
@@ -27,13 +39,3 @@ html body {
   white-space: normal;
 }
 
-.devise{
-  width:40%;
-  margin-left:30%;
-  margin-top:50px;
-  margin-bottom:100px;
-  border-radius:10px;
-  background-color:whitesmoke;padding:30px;
-  border-style:solid;
-  border-color:gainsboro;
-}
