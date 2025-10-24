@@ -10,7 +10,7 @@ class IncidentsController < ApplicationController
     else
       @incidents=Incident.where("log_line_content LIKE ? or llm_insights LIKE ?", "%"+params[:search]+"%","%"+params[:search]+"%").order("created_at DESC")
     end 
-    @incidents = @incidents.page(params[:page]).per(10)
+    @incidents = @incidents.page(params[:page]).per(8)
     
 
 
