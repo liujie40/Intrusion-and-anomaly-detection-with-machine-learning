@@ -57,7 +57,7 @@ This service is used to run the web application where the detections results wil
 </p>
 
 <p align="center">  
-  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_app_screenshot_1.png">
+  <img width="100%" src="https://github.com/slrbl/Intrusion-and-anomaly-detection-with-machine-learning/blob/master/IMAGES/webhawk_app_screenshot_3.png">
 </p>
 
 ##### Launching Docker services for the first time 
@@ -121,8 +121,8 @@ prompt:Analyze this web log line for malicious activity. Provide a brief one pra
 
 [WEBAPP]
 webhawk_ui
-url:http://webhawk_ui:3000/api/v1/incidents #if using docker compose
-url:http://localhost:3000/api/v1/incidents #if not using docker compose
+url:http://webhawk_ui:8080/api/v1/incidents #if using docker compose
+url:http://localhost:8080/api/v1/incidents #if not using docker compose
 ```
 
 ## Unsupervised detection Usage

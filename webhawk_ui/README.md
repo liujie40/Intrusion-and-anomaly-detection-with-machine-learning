@@ -7,7 +7,7 @@ The Webhawk web application is a cyber incident management system that was initi
 How to add a new incident using the API
 
 ```shell
-curl -X POST http://localhost:3000/api/v1/incidents \
+curl -X POST http://localhost:8080/api/v1/incidents \
   -H "Content-Type: application/json" \
   -d '{"incident": {"description": "Unauthorized access attempt", "attack_vector": "phishing"}}'
 ```

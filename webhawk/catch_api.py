@@ -181,7 +181,8 @@ def main(hostname,log_file,logs_content):
             raw_ai_advice=updated_finding[0]['ai_advice']
 
             try:
-                json_ai_advice=json.loads(raw_ai_advice.replace('\\',''))
+                json_ai_advice=json.loads(raw_ai_advice.replace('\\','').replace("'","\'"))
+
             except:
                 logging.info('> JSON parsing issue encountred')
                 logging.info(raw_ai_advice)

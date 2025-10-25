@@ -31,6 +31,6 @@ prompt:You are a cybersecurity expert. Does this log line contain indicators of 
 
 [WEBAPP]
 # Use the following url if using docker compose services
-url:http://webhawk_ui:3000/api/v1/incidents
+url:http://webhawk_ui:8080/api/v1/incidents
 # Use the following URL if NOT using docker compose services
-#url:http://127.0.0.1:3000/api/v1/incidents
+#url:http://127.0.0.1:8080/api/v1/incidents
