@@ -1,179 +1,84 @@
 <div id="<%= dom_id incident %>">
-
-<%= form_with url: :assign_incident, method: :post, html: { id: 'assign_to_me_form' } do %>
-  <%= hidden_field_tag :incident_id, incident.id %>
-  <!-- Add any fields here -->
-<% end %>
-
-    <h1 class="ui grey header">
-  <%= 'INC'+incident.id.to_s %>
-  <div class="sub header"><%= incident.created_at.to_s.sub('UTC','')%></div>
-</h1>
-
-<div class="ui grid">
-  <div class="nine wide column">
-
-
-
-
-  <table>
-  <!--<tr>
-    <td width='10%'>ID</td>
-    <td><%= 'INC'+incident.id.to_s %></td>
-  </tr>
-  <tr>
-    <td>Date</td>
-    <td><%= incident.created_at.to_s.sub('UTC','')%></td>
-  </tr>-->
-  <tr>
-    <td>Owner</td>
-    <td>
-      <% if incident.user_id!=nil %>
-      <%= User.find(incident.user_id).email %>
-      <% else %>
-               <button class="ui mini blue button" onclick="if (confirm('You will be the responsible of this incident')) {document.getElementById('assign_to_me_form').submit();}">Assign to me </button>
-(<i>This incident has not yet been assigned</i>)
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <td>Status</td>
-    <td><%= incident.status%></td>
-  </tr>
-  <tr>
-    <td>vector</td>
-    <td><%= incident.attack_vector%></td>
-  </tr>
-  <tr>
-    <td>Severity</td>
-    <td>
-      <% if incident.severity == 'high' %>
-            <div class="ui red horizontal label"><%= incident.severity.capitalize %></div>
-       <% end %>
-       <% if incident.severity == 'medium' %>
-      <div class="ui orange horizontal label"><%= incident.severity.capitalize %></div>
-       <% end %>
-       <% if incident.severity == 'low' %>
-      <div class="ui grey horizontal label"><%= incident.severity.capitalize %></div>
-       <% end %>
-    
-    </td>
-  </tr>
-  <tr>
-    <td>Artifact</td>
-    <td class="turncate"><div class="snippet"><code><%= incident.log_line_content%></code></td>
-  </tr>
-  <!--
-  <tr>
-    <td>AI Insights</td>
-    <td><%= incident.llm_insights%></td>
-  </tr>
-  -->
-  <tr>
-    <td>Associated CVE</td>
-    <td><%= raw(incident.cves) %></td>
-  </tr>
-  <tr>
-    <td>Associated OWASP</td>
-    <td><%= raw(incident.owasp) %></td>
-  </tr>
-  <!--
-  <tr>
-    <td>Recommendation</td>
-    <td><%= raw(incident.recommendation) %></td>
-  </tr>
-  -->
-</table>
-  </div>
-
-  
-  
-  <div class=" four wide column">
-  <h3 class="ui header">
-  
-  <div><i class="lightbulb icon"></i>AI Insights</div>
-
-  <div class="sub header">AI Analysis of the detection</div>
-</h2>
-<p>
-<%= incident.llm_insights%>
-</p>
-  </div>
-
-
-    <div class=" three wide column">
-  <h3 class="ui header">
-  
-    <div><i class="compass icon"></i>Recommendations</div>
-
-  <div class="sub header">AI recommendation</div>
-  
-</h2>
-<p>
-<%= incident.recommendation%>
-</p>
-  </div>
-
-
-</div>
-
-
-<!--
-  <p>
-    <strong>ID:</strong>
+  <!-- Assign to me form -->
+  <%= form_with url: :assign_incident, method: :post, html: { id: 'assign_to_me_form' } do %>
+    <%= hidden_field_tag :incident_id, incident.id %>
+  <% end %>
+  <h1 class="ui grey header">
     <%= 'INC'+incident.id.to_s %>
-  </p>
-
-  <p>
-    <strong>Date:</strong>
-    <%= incident.created_at.to_s.sub('UTC','') %>
-  </p>
-
-  <p>
-    <strong>Attack vector:</strong>
-    <%= incident.attack_vector %>
-  </p>
-
-  <p>
-    <strong>Severity:</strong>
-    <%= incident.severity.capitalize %>
-  </p>
-
-  <p>
-    <strong>Artifact:</strong>
-    <%= incident.log_line_content %>
-  </p>
-
-  <p>
-    <strong>AI Insights:</strong>
-    <%= incident.llm_insights %>
-  </p>
-
-  <p>
-    <strong>Related CVE(s):</strong>
-    <%= raw(incident.cves) %>
-  </p>
-
-  -->
-
+    <div class="sub header"><%= incident.created_at.to_s.sub('UTC','')%></div>
+  </h1>
+  <div class="ui grid">
+    <div class="nine wide column">
+      <table>
+        <tr>
+          <td>Owner</td>
+          <td>
+            <% if incident.user_id!=nil %>
+              <%= User.find(incident.user_id).email %>
+            <% else %>
+              <button class="ui mini blue button" onclick="if (confirm('You will be the responsible of this incident')) {document.getElementById('assign_to_me_form').submit();}">Assign to me </button> <br><i>This incident has not yet been assigned</i>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td><%= incident.status%></td>
+        </tr>
+        <tr>
+          <td>vector</td>
+          <td><%= incident.attack_vector%></td>
+        </tr>
+        <tr>
+          <td>Severity</td>
+          <td>
+            <% if incident.severity == 'high' %>
+                  <div class="ui red horizontal label"><%= incident.severity.capitalize %></div>
+            <% end %>
+            <% if incident.severity == 'medium' %>
+              <div class="ui orange horizontal label"><%= incident.severity.capitalize %></div>
+            <% end %>
+            <% if incident.severity == 'low' %>
+              <div class="ui grey horizontal label"><%= incident.severity.capitalize %></div>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Artifact</td>
+          <td class="turncate"><div class="snippet"><code><%= incident.log_line_content%></code></td>
+        </tr>
+        <tr>
+          <td>Associated CVE</td>
+          <td><%= raw(incident.cves) %></td>
+        </tr>
+        <tr>
+          <td>Associated OWASP</td>
+          <td><%= raw(incident.owasp) %></td>
+        </tr>
+      </table>
+    </div>
+    <div class=" seven wide column">
+      <h2 class="ui header">
+        AI Insights
+        <div class="sub header">AI Analysis and recommendations</div>
+      </h2>
+      <div class="ui grid">
+        <div class=" eight wide column">
+          <h3 class="ui header">
+            <div><i class="lightbulb icon"></i>Analysis</div>
+          </h3>
+          <p>
+            <%= incident.llm_insights%>
+          </p>
+        </div>
+        <div class=" eight wide column">
+          <h3 class="ui header">
+            <div><i class="compass icon"></i>Recommendations</div>
+          </h3>
+          <p>
+            <%= incident.recommendation%>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-
-
-
-<!--
-id: 69,
- description: nil,
- attack_vector: "Web",
- created_at: "2025-06-25 20:22:59.214259000 +0000",
- updated_at: "2025-06-25 20:22:59.214259000 +0000",
- detected_at: nil,
- cves: "<i>No CVE found</i>",
- severity: "medium",
- llm_insights: "This line indicates a potential Cross-Site Scripti...",
- log_line: 480,
- log_line_content: "27.158.48.59 - - [22/Oct/2021:16:49:29 -0700] \"POS...">
--->
